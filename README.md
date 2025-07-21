@@ -1,4 +1,4 @@
-# First Bcrypt Project
+# first-secure-auth-system
 
 This project demonstrates basic usage of MongoDB with Node.js.
 
