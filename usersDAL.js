@@ -1,5 +1,6 @@
 import { connectToDatabase } from "./db.js";
 import  {ObjectId} from "mongodb";
+import bcrypt from 'bcrypt';
 
 // export async function getUserById(id) {
 //     const {data, error} = await supabase.from('users').select('*').eq('id', id).single();
@@ -29,20 +30,32 @@ export async function getUserByIdFDB(id) {
  
 }
 
-export async function getUserByNameAndPassword(username, password) {
-   try {
-        const usersCollection = await connectToUsersCollection();
-        const result = await usersCollection.findOne({"username": username, "password": password})
 
-        if (!result) {
+export async function getUserByNameAndPassword(username, password) {
+    try {
+        const usersCollection = await connectToUsersCollection();
+
+        const user = await usersCollection.findOne({ username });
+
+        if (!user) {
             return { success: false, data: null, error: 'user not found' };
         }
 
-        return { success: true, data: result, error: null };
+        console.log(`user.password:` + user.hashedPassword + "password: " + password);
+        
+        const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
+
+        if (!passwordMatch) {
+            return { success: false, data: null, error: 'wrong password' };
+        }
+
+        return { success: true, data: user, error: null };
+
     } catch (error) {
         return { success: false, data: null, error };
     }
 }
+
 
 export async function getAllUsersFDB() {
     try {

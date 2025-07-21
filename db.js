@@ -16,7 +16,7 @@ export async function connectToDatabase() {
             return db
         }
         await client.connect();
-        db = client.db('myDatabase');
+        db = client.db('riddlesGame');
         console.log('Connected to MongoDB');
         return db;
     } catch (error) {

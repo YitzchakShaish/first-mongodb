@@ -1,4 +1,4 @@
-# First MongoDB Project
+# First Bcrypt Project
 
 This project demonstrates basic usage of MongoDB with Node.js.
 
