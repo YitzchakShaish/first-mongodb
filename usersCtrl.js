@@ -49,6 +49,11 @@ export const insertNewUsername = async (req, res) => {
     if (!password || typeof password !== 'string' || password.trim() === '') {
         return res.status(400).json({ message: 'Invalid or missing password.' });
     }
+
+    //Validate role
+     if (!role || typeof role !== 'string' || role.trim() === '') {
+        return res.status(400).json({ message: 'Invalid or missing role.' });
+    }
     console.log(`password: ` + password + `role: ` + role);
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -73,25 +78,10 @@ export const getAllUsers = async (req, res) => {
     res.json({ message: `All users Hello ${req.user.username}, your role is ${req.user.role}`, user: result.data });
 }
 
-export const getUserById = async (req, res) => {
-    const id = req.params.id;
-    // Validate ID
-    if (!id) {
-        return res.status(400).json({ message: 'Invalid or missing user ID.' });
-    }
-
-    const result = await getUserByIdFDB(id);
-
-    if (!result.success) {
-        return res.status(401).json({ message: 'user not found' });
-    }
-
-    res.json({ message: 'user:', user: result.data });
-}
 
 export const updateUserById = async (req, res) => {
     const id = req.params.id;
-    const { username, password } = req.body;
+    const { username } = req.body;
 
     // Validate ID
     if (!id) {
@@ -103,13 +93,9 @@ export const updateUserById = async (req, res) => {
         return res.status(400).json({ message: 'Invalid or missing username.' });
     }
 
-    // // Validate password
-    // if (!password || typeof password !== 'string' || password.trim() === '') {
-    //     return res.status(400).json({ message: 'Invalid or missing password.' });
-    // }
 
     // Update in DB
-    const result = await updateUsernameTDB(id, { username, password });
+    const result = await updateUsernameTDB(id, { username });
 
     if (!result.success) {
         return res.status(404).json({ message: 'User not found.' });

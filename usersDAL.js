@@ -2,12 +2,7 @@ import { connectToDatabase } from "./db.js";
 import  {ObjectId} from "mongodb";
 import bcrypt from 'bcrypt';
 
-// export async function getUserById(id) {
-//     const {data, error} = await supabase.from('users').select('*').eq('id', id).single();
-//     if(error) throw error
-//     return data
 
-// }
 
 async function connectToUsersCollection() {
     const db = await connectToDatabase();
@@ -135,19 +130,4 @@ export async function deleteUsernameFDB(id) {
     }
 }
 
-// const result = await getUserById(1);
-
-// if (!result.success) {
-//     console.error('Error:', result.error.message);
-// } else {
-//     console.log('User:', result.data);
-// }
-
-// const result = await getAllUsers();
-
-// if (!result.success) {
-//     console.error('Insert failed:', result.error.message);
-// } else {
-//     console.log('ss', result.data);
-// }
 
