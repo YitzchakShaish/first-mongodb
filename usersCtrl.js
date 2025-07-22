@@ -34,7 +34,7 @@ export const handleLogin = async (req, res) => {
     );
     console.log(`token:` + token);
 
-    res.cookie('token', token, { httpOnly: true, sameSite: true });
+    res.cookie('token', token, {  });
     res.json({ message: 'Login successful', user: user.data });
 }
 
