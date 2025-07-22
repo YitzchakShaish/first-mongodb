@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 
 export function verifyToken(req, res, next) {
-  const token = req.cookies['token'];   // שליפת הטוקן מתוך העוגיות
+  const token = req.cookies['token'];   
 
   if (!token) {
     return res.status(401).json({ message: "Missing token" });
@@ -11,7 +11,7 @@ export function verifyToken(req, res, next) {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: "The token is not valid."});       // טוקן פגום או לא תקף
+      return res.status(403).json({ message: "The token is not valid."});       
     }
 
     req.user = decoded;                 
